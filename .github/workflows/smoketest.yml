@@ -65,9 +65,21 @@ jobs:
     needs: [install]
     name: Verify formatting
 
+    strategy:
+      matrix:
+        node-version: [14.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Prettier
+        run: yarn global add prettier @prettier/plugin-php
 
       - name: Verify formatting
         uses: php-actions/composer@v5
