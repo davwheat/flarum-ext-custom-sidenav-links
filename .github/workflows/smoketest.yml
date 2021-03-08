@@ -1,0 +1,106 @@
+# This CI workflow was adapted from flarum/core
+# and davwheat/let-me-really-google-that-for-you
+
+name: Smoketest
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    name: Prepare repo
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Enter JS directory
+        run: cd js
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
+        id: yarnCache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Restore node_modules
+        uses: actions/cache@v2
+        id: moduleCache
+        with:
+          path: ./js/node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.sha }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-${{ github.sha }}-
+            ${{ runner.os }}-node-modules-
+
+      - name: Install dependencies on cache miss
+        run: cd js && yarn install --frozen-lockfile
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+
+      - name: Install project dependencies from cache
+        run: cd js && yarn --prefer-offline --frozen-lockfile
+        if: steps.yarn-cache.outputs.cache-hit == 'true'
+
+  formatting:
+    runs-on: ubuntu-latest
+    needs: [install]
+    name: Verify formatting
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
+        id: moduleCache
+        with:
+          path: ./js/node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.sha }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Verify formatting
+        run: cd js && yarn format:check
+
+  build:
+    name: Build JS bundle
+    runs-on: ubuntu-latest
+    needs: [formatting]
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: davwheat/action-build-flarum-ext-js-yarn@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
