@@ -18,8 +18,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/davwheat/custom-sidenav-links/issues",
-    "source": "https://github.com/davwheat/custom-sidenav-links",
+    "issues": "https://github.com/davwheat/flarum-ext-custom-sidenav-links/issues",
+    "source": "https://github.com/davwheat/flarum-ext-custom-sidenav-links",
     "forum": "https://discuss.flarum.org/d/26380"
   },
   "autoload": {

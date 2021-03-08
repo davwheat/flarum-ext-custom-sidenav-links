@@ -26,5 +26,5 @@ php flarum cache:clear
 ### Links
 
 - [Packagist](https://packagist.org/packages/davwheat/custom-sidenav-links)
-- [GitHub](https://github.com/davwheat/custom-sidenav-links)
+- [GitHub](https://github.com/davwheat/flarum-ext-custom-sidenav-links)
 - [Discuss](https://discuss.flarum.org/d/26380)
