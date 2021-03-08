@@ -65,28 +65,14 @@ jobs:
     needs: [install]
     name: Verify formatting
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Restore dependencies cache
-        uses: actions/cache@v2
-        id: moduleCache
-        with:
-          path: ./js/node_modules
-          key: ${{ runner.os }}-node-modules-${{ github.sha }}-${{ hashFiles('**/yarn.lock') }}
-
       - name: Verify formatting
-        run: cd js && yarn format:check
+        uses: php-actions/composer@v5
+        with:
+          command: run format:check
 
   build:
     name: Build JS bundle
