@@ -4,6 +4,10 @@
 
 A [Flarum](http://flarum.org) extension. Add custom links to the side navigation in Flarum.
 
+![](https://github.com/davwheat/flarum-ext-custom-sidenav-links/blob/main/docs/example.png?raw=true)
+
+![](https://github.com/davwheat/flarum-ext-custom-sidenav-links/blob/main/docs/admin.png?raw=true)
+
 ### Installation
 
 Install with composer:
