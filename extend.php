@@ -21,5 +21,9 @@ return [
 
   new Extend\Locales(__DIR__ . '/locale'),
 
-  (new FoFExtend\ExtensionSettings())->addKey('davwheat-custom-sidenav-links.link-data'),
+  (new FoFExtend\ExtensionSettings())
+    ->addKey('davwheat-custom-sidenav-links.link-data')
+    ->addKey('davwheat-custom-sidenav-links.position')
+    ->addKey('davwheat-custom-sidenav-links.top-spacer')
+    ->addKey('davwheat-custom-sidenav-links.bottom-spacer'),
 ];

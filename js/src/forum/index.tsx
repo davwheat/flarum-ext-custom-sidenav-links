@@ -3,11 +3,18 @@ import { extend } from 'flarum/extend'
 import IndexPage from 'flarum/forum/components/IndexPage'
 import LinkButton from 'flarum/forum/components/LinkButton'
 import Separator from 'flarum/forum/components/Separator'
+import type ItemList from 'flarum/common/utils/ItemList'
 
-import { default as SideNavLink, SideNavLinkJSObject } from '../common/models/SideNavLink'
+import { default as SideNavLink, LinksPosition, SideNavLinkJSObject } from '../common/models/SideNavLink'
 
 app.initializers.add('davwheat/custom-sidenav-links', app => {
-  const jsonRaw: string = app.data['davwheat-custom-sidenav-links.link-data']
+  const jsonRaw: string = app.data['davwheat-custom-sidenav-links.link-data'] || '[]'
+  const linkPosition: LinksPosition = app.data['davwheat-custom-sidenav-links.position'] || 'above-tags-link'
+
+  const showTopSpacer: boolean = app.data['davwheat-custom-sidenav-links.top-spacer'] !== '0'
+  const showBottomSpacer: boolean = app.data['davwheat-custom-sidenav-links.bottom-spacer'] !== '0'
+
+  const priority = linkPosition === 'above-tags-link' ? 0 : -11
 
   if (jsonRaw && jsonRaw !== '[]') {
     const jsonParsed: SideNavLinkJSObject[] = JSON.parse(jsonRaw)
@@ -15,8 +22,8 @@ app.initializers.add('davwheat/custom-sidenav-links', app => {
 
     jsonParsed.forEach(l => links.push(SideNavLink.fromJsObject(l)))
 
-    extend(IndexPage.prototype, 'navItems', items => {
-      items.add('customLinks-separator1', <Separator />, 1)
+    extend(IndexPage.prototype, 'navItems', (items: typeof ItemList) => {
+      showTopSpacer && items.add('customLinks-separator1', <Separator />, priority + 1)
 
       links.forEach((link, i) => {
         let href = link.url
@@ -34,11 +41,11 @@ app.initializers.add('davwheat/custom-sidenav-links', app => {
           <LinkButton external={!link.internal} href={href} rel="noopener noreferrer" icon={link.icon}>
             {link.text}
           </LinkButton>,
-          0,
+          priority,
         )
       })
 
-      items.add('customLinks-separator2', <Separator />, -1)
+      showBottomSpacer && items.add('customLinks-separator2', <Separator />, priority - 1)
     })
   }
 })

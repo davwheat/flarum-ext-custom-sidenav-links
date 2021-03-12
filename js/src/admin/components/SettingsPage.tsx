@@ -5,21 +5,21 @@ import Button from 'flarum/common/components/Button'
 import Switch from 'flarum/common/components/Switch'
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator'
 import Input from './Input'
+import Select from './Select'
 
 import saveSettings from 'flarum/common/utils/saveSettings'
 import extractText from 'flarum/common/utils/extractText'
 
-import { default as SideNavLink, SideNavLinkJSObject } from '../../common/models/SideNavLink'
+import { default as SideNavLink, LinksPosition, SideNavLinkJSObject } from '../../common/models/SideNavLink'
 import isValidUrl from '../isValidUrl'
 import AddLinkModal from './AddLinkModal'
 
-const settingsKey = `davwheat-custom-sidenav-links.link-data`
+const linkDataSettingsKey = `davwheat-custom-sidenav-links.link-data`
 
 const translate = (key: string, data?: Record<string, unknown>): string[] =>
   app.translator.trans(`davwheat.custom_sidenav_links.admin.settings_page.${key}`, data)
 
 export default class FakeDataPage extends ExtensionPage {
-  private settings = {}
   private loading = false
   private isDirty = false
   private isAnyUrlInvalid = false
@@ -29,6 +29,10 @@ export default class FakeDataPage extends ExtensionPage {
    */
   private rawLinkData: string = app.data.settings['davwheat-custom-sidenav-links.link-data']
   private linkData: SideNavLink[] | null = null
+
+  private linkPosition: LinksPosition = app.data.settings['davwheat-custom-sidenav-links.position'] || 'above-tags-link'
+  private showTopSpacer: boolean = app.data.settings['davwheat-custom-sidenav-links.top-spacer'] || true
+  private showBottomSpacer: boolean = app.data.settings['davwheat-custom-sidenav-links.bottom-spacer'] || true
 
   oninit(vnode) {
     super.oninit(vnode)
@@ -41,7 +45,7 @@ export default class FakeDataPage extends ExtensionPage {
     if (!this.rawLinkData) {
       return (
         <p>
-          My settings key (<code>{settingsKey}</code>) is missing from your database! Make sure you've run the migrations. If that doesn't work, add it to your
+          My settings key (<code>{linkDataSettingsKey}</code>) is missing from your database! Make sure you've run the migrations. If that doesn't work, add it to your
           settings table manually with the content <code>[]</code>.
         </p>
       )
@@ -60,8 +64,58 @@ export default class FakeDataPage extends ExtensionPage {
     return (
       <div class="davwheat-ext-settings">
         <form>
+          <section className="davwheat-sidenav-addlink davwheat-custom-sidenav-links--display-options">
+            <h2>{translate('display_options.heading')}</h2>
+
+            <label>
+              {translate('display_options.labels.position')}
+
+              <Select
+                value={this.linkPosition}
+                options={{
+                  'above-tags-link': translate('display_options.options.position.above-tags-link'),
+                  'below-tags-link': translate('display_options.options.position.below-tags-link'),
+                }}
+                disabled={this.loading}
+                onChange={(val: LinksPosition) => {
+                  console.log(val);
+
+                  this.linkPosition = val
+                  this.makeDirty()
+                }}
+              />
+            </label>
+
+            <label>
+              {translate('display_options.labels.top_spacer')}
+
+              <Switch
+                state={this.showTopSpacer}
+                disabled={this.loading}
+                onchange={(val: boolean) => {
+                  this.showTopSpacer = val
+                  this.makeDirty()
+                }}
+              />
+            </label>
+
+            <label>
+              {translate('display_options.labels.bottom_spacer')}
+
+              <Switch
+                state={this.showBottomSpacer}
+                disabled={this.loading}
+                onchange={(val: boolean) => {
+                  this.showBottomSpacer = val
+                  this.makeDirty()
+                }}
+              />
+            </label>
+          </section>
+        </form>
+        <form>
           <section class="davwheat-sidenav-addlink">
-            <h2>{translate('heading')}</h2>
+            <h2>{translate('link_table.heading')}</h2>
             <Button
               class="Button davwheat-sidenav-addlink-btn"
               icon="fas fa-plus"
@@ -69,19 +123,20 @@ export default class FakeDataPage extends ExtensionPage {
                 app.modal.show(AddLinkModal, { links: this.linkData })
                 this.makeDirty()
               }}
+              disabled={this.loading}
             >
-              {translate('add_link_btn')}
+              {translate('link_table.add_link_btn')}
             </Button>
           </section>
 
           <div class="scroll-container">
             <main>
-              <div id="davwheat-sidenav--position-heading">{translate('table.header.position')}</div>
-              <div id="davwheat-sidenav--icon-heading">{translate('table.header.icon')}</div>
-              <div id="davwheat-sidenav--text-heading">{translate('table.header.text')}</div>
-              <div id="davwheat-sidenav--url-heading">{translate('table.header.url')}</div>
-              <div id="davwheat-sidenav--internal-heading">{translate('table.header.internal')}</div>
-              <div id="davwheat-sidenav--delete-heading">{translate('table.header.delete')}</div>
+              <div id="davwheat-sidenav--position-heading">{translate('link_table.table.header.position')}</div>
+              <div id="davwheat-sidenav--icon-heading">{translate('link_table.table.header.icon')}</div>
+              <div id="davwheat-sidenav--text-heading">{translate('link_table.table.header.text')}</div>
+              <div id="davwheat-sidenav--url-heading">{translate('link_table.table.header.url')}</div>
+              <div id="davwheat-sidenav--internal-heading">{translate('link_table.table.header.internal')}</div>
+              <div id="davwheat-sidenav--delete-heading">{translate('link_table.table.header.delete')}</div>
 
               {this.linkData.map((link, i) => {
                 const validUrl = isValidUrl(link.url)
@@ -92,8 +147,8 @@ export default class FakeDataPage extends ExtensionPage {
                     <Button
                       class="Button Button--icon"
                       icon="fas fa-arrow-up"
-                      title={translate('table.tooltips.move_up')}
-                      disabled={i === 0}
+                      title={translate('link_table.table.tooltips.move_up')}
+                      disabled={i === 0 || this.loading}
                       onclick={() => {
                         if (i === 0) return
 
@@ -105,8 +160,8 @@ export default class FakeDataPage extends ExtensionPage {
                     <Button
                       class="Button Button--icon"
                       icon="fas fa-arrow-down"
-                      title={translate('table.tooltips.move_down')}
-                      disabled={i === (this.linkData?.length || 1) - 1}
+                      title={translate('link_table.table.tooltips.move_down')}
+                      disabled={(i === (this.linkData?.length || 1) - 1) || this.loading}
                       onclick={() => {
                         if (i === (this.linkData?.length || 1) - 1) return
 
@@ -117,7 +172,7 @@ export default class FakeDataPage extends ExtensionPage {
                     />
                   </div>,
                   <div data-column="icon">
-                    <span class={`icon-preview fa-fw ${link.icon}`} title={translate('table.tooltips.icon_preview')} />
+                    <span class={`icon-preview fa-fw ${link.icon}`} title={translate('link_table.table.tooltips.icon_preview')} />
                     <Input
                       value={link.icon}
                       onChange={(newValue: string) => {
@@ -125,8 +180,8 @@ export default class FakeDataPage extends ExtensionPage {
                         this.makeDirty()
                       }}
                       labelId="davwheat-sidenav--icon-heading"
-                      placeholder={translate('table.placeholders.icon')}
-                      disabled={false}
+                      placeholder={translate('link_table.table.placeholders.icon')}
+                      disabled={this.loading}
                     />
                   </div>,
                   <div data-column="text">
@@ -137,8 +192,8 @@ export default class FakeDataPage extends ExtensionPage {
                         this.makeDirty()
                       }}
                       labelId="davwheat-sidenav--text-heading"
-                      placeholder={translate('table.placeholders.text')}
-                      disabled={false}
+                      placeholder={translate('link_table.table.placeholders.text')}
+                      disabled={this.loading}
                     />
                   </div>,
                   <div data-column="url">
@@ -150,8 +205,8 @@ export default class FakeDataPage extends ExtensionPage {
                         this.makeDirty()
                       }}
                       labelId="davwheat-sidenav--url-heading"
-                      placeholder={translate('table.placeholders.url')}
-                      disabled={false}
+                      placeholder={translate('link_table.table.placeholders.url')}
+                      disabled={this.loading}
                     />
                   </div>,
                   <div data-column="internal">
@@ -162,7 +217,7 @@ export default class FakeDataPage extends ExtensionPage {
                         this.makeDirty()
                       }}
                       aria-labelled-by="davwheat-sidenav--url-heading"
-                      disabled={false}
+                      disabled={this.loading}
                     />
                   </div>,
                   <div data-column="delete">
@@ -171,11 +226,12 @@ export default class FakeDataPage extends ExtensionPage {
                       icon="fas fa-trash"
                       aria-labelled-by="davwheat-sidenav--delete-heading"
                       onclick={() => {
-                        if (confirm(extractText(translate('confirm_delete', { link: link.text })))) {
+                        if (confirm(extractText(translate('link_table.confirm_delete', { link: link.text })))) {
                           // Remove this link
                           this.linkData?.splice(i, 1)
                         }
                       }}
+                      disabled={this.loading}
                     />
                   </div>,
                 ]
@@ -199,11 +255,11 @@ export default class FakeDataPage extends ExtensionPage {
   private getButtonText(isAnyUrlInvalid: boolean): string[] {
     this.isAnyUrlInvalid = isAnyUrlInvalid
 
-    if (this.isAnyUrlInvalid) return translate('save_btn.fix_errors')
-    if (this.loading) return translate('save_btn.saving')
-    if (this.isDirty) return translate('save_btn.dirty')
+    if (this.isAnyUrlInvalid) return translate('link_table.save_btn.fix_errors')
+    if (this.loading) return translate('link_table.save_btn.saving')
+    if (this.isDirty) return translate('link_table.save_btn.dirty')
 
-    return translate('save_btn.saved')
+    return translate('link_table.save_btn.saved')
   }
 
   createData(): void {
@@ -213,7 +269,7 @@ export default class FakeDataPage extends ExtensionPage {
     try {
       json = Object.freeze(JSON.parse(rawData))
     } catch {
-      throw `Invalid JSON found in Flarum setting \`${settingsKey}\`. We can't continue. Fix manually, or reset to \`[]\` in your DB.`
+      throw `Invalid JSON found in Flarum setting \`${linkDataSettingsKey}\`. We can't continue. Fix manually, or reset to \`[]\` in your DB.`
     }
 
     let finalData: SideNavLink[] = []
@@ -231,7 +287,7 @@ export default class FakeDataPage extends ExtensionPage {
     e.preventDefault()
 
     if (this.isAnyUrlInvalid) {
-      app.alerts.show({ type: 'error' }, translate('alert.fix_errors'))
+      app.alerts.show({ type: 'error' }, translate('link_table.alert.fix_errors'))
       return
     }
 
@@ -241,7 +297,12 @@ export default class FakeDataPage extends ExtensionPage {
     const stringData = JSON.stringify(this.linkData)
     console.log(stringData)
 
-    return saveSettings({ [settingsKey]: JSON.stringify(this.linkData) }).then(this.onSettingsSaved.bind(this))
+    return saveSettings({
+      [linkDataSettingsKey]: JSON.stringify(this.linkData),
+      "davwheat-custom-sidenav-links.position": this.linkPosition,
+      "davwheat-custom-sidenav-links.top-spacer": this.showTopSpacer,
+      "davwheat-custom-sidenav-links.bottom-spacer": this.showBottomSpacer
+    }).then(this.onSettingsSaved.bind(this))
   }
 
   onSettingsSaved(): void {

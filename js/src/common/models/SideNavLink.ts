@@ -5,6 +5,8 @@ export interface SideNavLinkJSObject {
   internal: boolean
 }
 
+export type LinksPosition = 'above-tags-link' | 'below-tags-link'
+
 export default class SideNavLink {
   /**
    * Create instance of SideNavLink
