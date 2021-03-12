@@ -45,8 +45,8 @@ export default class FakeDataPage extends ExtensionPage {
     if (!this.rawLinkData) {
       return (
         <p>
-          My settings key (<code>{linkDataSettingsKey}</code>) is missing from your database! Make sure you've run the migrations. If that doesn't work, add it to your
-          settings table manually with the content <code>[]</code>.
+          My settings key (<code>{linkDataSettingsKey}</code>) is missing from your database! Make sure you've run the migrations. If that doesn't work, add it
+          to your settings table manually with the content <code>[]</code>.
         </p>
       )
     } else if (!this.linkData) {
@@ -78,7 +78,7 @@ export default class FakeDataPage extends ExtensionPage {
                 }}
                 disabled={this.loading}
                 onChange={(val: LinksPosition) => {
-                  console.log(val);
+                  console.log(val)
 
                   this.linkPosition = val
                   this.makeDirty()
@@ -161,7 +161,7 @@ export default class FakeDataPage extends ExtensionPage {
                       class="Button Button--icon"
                       icon="fas fa-arrow-down"
                       title={translate('link_table.table.tooltips.move_down')}
-                      disabled={(i === (this.linkData?.length || 1) - 1) || this.loading}
+                      disabled={i === (this.linkData?.length || 1) - 1 || this.loading}
                       onclick={() => {
                         if (i === (this.linkData?.length || 1) - 1) return
 
@@ -299,9 +299,9 @@ export default class FakeDataPage extends ExtensionPage {
 
     return saveSettings({
       [linkDataSettingsKey]: JSON.stringify(this.linkData),
-      "davwheat-custom-sidenav-links.position": this.linkPosition,
-      "davwheat-custom-sidenav-links.top-spacer": this.showTopSpacer,
-      "davwheat-custom-sidenav-links.bottom-spacer": this.showBottomSpacer
+      'davwheat-custom-sidenav-links.position': this.linkPosition,
+      'davwheat-custom-sidenav-links.top-spacer': this.showTopSpacer,
+      'davwheat-custom-sidenav-links.bottom-spacer': this.showBottomSpacer,
     }).then(this.onSettingsSaved.bind(this))
   }
 
