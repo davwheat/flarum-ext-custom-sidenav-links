@@ -150,9 +150,8 @@ export default class FakeDataPage extends ExtensionPage {
                       title={translate('link_table.table.tooltips.move_up')}
                       disabled={i === 0 || this.loading}
                       onclick={() => {
-                        if (i === 0) return
+                        if (i === 0 || !this.linkData) return
 
-                        let temp = link
                         this.linkData[i] = this.linkData[i - 1]
                         this.linkData[i - 1] = link
                       }}
@@ -163,9 +162,8 @@ export default class FakeDataPage extends ExtensionPage {
                       title={translate('link_table.table.tooltips.move_down')}
                       disabled={i === (this.linkData?.length || 1) - 1 || this.loading}
                       onclick={() => {
-                        if (i === (this.linkData?.length || 1) - 1) return
+                        if (i === (this.linkData?.length || 1) - 1 || !this.linkData) return
 
-                        let temp = link
                         this.linkData[i] = this.linkData[i + 1]
                         this.linkData[i + 1] = link
                       }}
@@ -176,6 +174,8 @@ export default class FakeDataPage extends ExtensionPage {
                     <Input
                       value={link.icon}
                       onChange={(newValue: string) => {
+                        if (!this.linkData) return
+
                         this.linkData[i].icon = newValue
                         this.makeDirty()
                       }}
@@ -188,6 +188,8 @@ export default class FakeDataPage extends ExtensionPage {
                     <Input
                       value={link.text}
                       onChange={(newValue: string) => {
+                        if (!this.linkData) return
+
                         this.linkData[i].text = newValue
                         this.makeDirty()
                       }}
@@ -201,6 +203,8 @@ export default class FakeDataPage extends ExtensionPage {
                       class={!validUrl && 'sidenav-input--invalid'}
                       value={link.url}
                       onChange={(newValue: string) => {
+                        if (!this.linkData) return
+
                         this.linkData[i].url = newValue
                         this.makeDirty()
                       }}
@@ -213,6 +217,8 @@ export default class FakeDataPage extends ExtensionPage {
                     <Switch
                       state={link.internal}
                       onchange={(newValue: boolean) => {
+                        if (!this.linkData) return
+
                         this.linkData[i].internal = newValue
                         this.makeDirty()
                       }}

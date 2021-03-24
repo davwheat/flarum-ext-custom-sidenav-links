@@ -2,7 +2,6 @@ import Modal from 'flarum/common/components/Modal'
 
 import Button from 'flarum/common/components/Button'
 import Switch from 'flarum/common/components/Switch'
-import LoadingIndicator from 'flarum/common/components/LoadingIndicator'
 import Input from './Input'
 
 import extractText from 'flarum/common/utils/extractText'
@@ -17,16 +16,12 @@ export default class AddLinkModal extends Modal {
   private loading = false
   private newLink: SideNavLink = new SideNavLink('', '', '', false)
 
-  // constructor(public links: SideNavLink[]) {
-  //   super()
-  // }
-
   className() {
     return 'davwheat-sidenav-AddLinkModal Modal--small'
   }
 
   title() {
-    return translate('title')
+    return extractText(translate('title'))
   }
 
   content() {
@@ -115,9 +110,7 @@ export default class AddLinkModal extends Modal {
     return this.newLink.icon.trim() !== '' && this.newLink.text.trim() !== '' && this.newLink.url.trim() !== ''
   }
 
-  onsubmit(e) {
-    e.preventDefault()
-
+  onsubmit() {
     this.loading = true
     this.hide.bind(this)()
 
