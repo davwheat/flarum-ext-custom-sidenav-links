@@ -12,7 +12,7 @@
 namespace Davwheat\CustomSidenavLinks;
 
 use Flarum\Extend;
-use FoF\Extend\Extend as FoFExtend;
+use Davwheat\CustomSidenavLinks\Extend\ExtensionSettings;
 
 return [
   (new Extend\Frontend('forum'))->js(__DIR__ . '/js/dist/forum.js')->css(__DIR__ . '/less/forum.less'),
@@ -21,7 +21,7 @@ return [
 
   new Extend\Locales(__DIR__ . '/locale'),
 
-  (new FoFExtend\ExtensionSettings())
+  (new ExtensionSettings())
     ->addKey('davwheat-custom-sidenav-links.link-data')
     ->addKey('davwheat-custom-sidenav-links.position')
     ->addKey('davwheat-custom-sidenav-links.top-spacer')
