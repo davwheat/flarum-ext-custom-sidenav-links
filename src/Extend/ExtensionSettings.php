@@ -36,19 +36,16 @@ class ExtensionSettings implements ExtenderInterface
 
   public function extend(Container $container, Extension $extension = null)
   {
-    $container->resolving(
-      'flarum.frontend.forum',
-      function (Frontend $frontend, Container $container) {
-        /** @var SettingsRepositoryInterface settings */
-        $settings = $container->make(SettingsRepositoryInterface::class);
+    $container->resolving('flarum.frontend.forum', function (Frontend $frontend, Container $container) {
+      /** @var SettingsRepositoryInterface settings */
+      $settings = $container->make(SettingsRepositoryInterface::class);
 
-        $frontend->content(function (Document $document) use ($settings) {
-          foreach ($this->keys as $index => $key) {
-            $document->payload[$key] = $settings->get($key, $this->defaults[$index]);
-          }
-        });
-      }
-    );
+      $frontend->content(function (Document $document) use ($settings) {
+        foreach ($this->keys as $index => $key) {
+          $document->payload[$key] = $settings->get($key, $this->defaults[$index]);
+        }
+      });
+    });
   }
 
   /**
