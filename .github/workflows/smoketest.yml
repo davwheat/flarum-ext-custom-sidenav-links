@@ -35,7 +35,7 @@ jobs:
       - name: Verify formatting
         run: composer run format:check
 
-      - uses: flarum/action-build@2
+      - uses: flarum/action-build@master
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
