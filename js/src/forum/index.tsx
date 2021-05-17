@@ -22,7 +22,7 @@ app.initializers.add('davwheat/custom-sidenav-links', app => {
 
     jsonParsed.forEach(l => links.push(SideNavLink.fromJsObject(l)))
 
-    extend(IndexPage.prototype, 'navItems', (items: typeof ItemList) => {
+    extend(IndexPage.prototype, 'navItems', (items: ItemList) => {
       showTopSpacer && items.add('customLinks-separator1', <Separator />, priority + 1)
 
       links.forEach((link, i) => {

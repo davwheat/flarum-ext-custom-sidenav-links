@@ -78,8 +78,6 @@ export default class FakeDataPage extends ExtensionPage {
                 }}
                 disabled={this.loading}
                 onChange={(val: LinksPosition) => {
-                  console.log(val)
-
                   this.linkPosition = val
                   this.makeDirty()
                 }}
@@ -301,7 +299,6 @@ export default class FakeDataPage extends ExtensionPage {
     this.loading = true
 
     const stringData = JSON.stringify(this.linkData)
-    console.log(stringData)
 
     return saveSettings({
       [linkDataSettingsKey]: JSON.stringify(this.linkData),

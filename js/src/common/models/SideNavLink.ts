@@ -16,7 +16,12 @@ export default class SideNavLink {
    * @param url Link URL (e.g. `https://flarum.org/`)
    * @param internal Is link within forum? (e.g. `false`)
    */
-  constructor(public icon: string, public text: string, public url: string, public internal: boolean) {}
+  constructor(public icon: string, public text: string, public url: string, public internal: boolean) {
+    this.icon = icon
+    this.text = text
+    this.url = url
+    this.internal = internal || false
+  }
 
   static fromJsObject(obj: SideNavLinkJSObject) {
     return new SideNavLink(obj.icon, obj.text, obj.url, obj.internal)
