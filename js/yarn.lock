@@ -2345,6 +2345,11 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+flarum-tsconfig@^0.1.0-beta.16.1:
+  version "0.1.0-beta.16.1"
+  resolved "https://registry.yarnpkg.com/flarum-tsconfig/-/flarum-tsconfig-0.1.0-beta.16.1.tgz#a5bc5383c5a584005adb90f13be950fc1d84fc20"
+  integrity sha512-LXepwNswwgv+96Tm5WtldZR7nYD8CS/DVawRVN4PaSYES5qfAiQDaBJm4RYFXNcmu2DEQbhx8VejJe0gdCx0Rg==
+
 flarum-webpack-config@0.1.0-beta.16.2:
   version "0.1.0-beta.16.2"
   resolved "https://registry.yarnpkg.com/flarum-webpack-config/-/flarum-webpack-config-0.1.0-beta.16.2.tgz#85a0bd15e9bf1dd98b89672db0eb9656f42d7a4c"
