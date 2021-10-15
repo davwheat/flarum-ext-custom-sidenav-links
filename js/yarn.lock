@@ -1181,6 +1181,11 @@
   resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
+"@flarum/prettier-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@flarum/prettier-config/-/prettier-config-1.0.0.tgz#3ce431fa376994e8133e313dbe7c4ee3d3fe1a39"
+  integrity sha512-3/AcliIi5jPt4i7COb5hsLv6hm4EeXT9yI9I2EuEvhPi2QR+O9Y/8wrqRuO5mDkRzCIhUY+mjIL/f9770Zwfqg==
+
 "@polka/url@^1.0.0-next.9":
   version "1.0.0-next.12"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.12.tgz#431ec342a7195622f86688bbda82e3166ce8cb28"
@@ -1190,6 +1195,13 @@
   version "3.5.5"
   resolved "https://registry.npmjs.org/@types/jquery/-/jquery-3.5.5.tgz"
   integrity sha512-6RXU9Xzpc6vxNrS6FPPapN1SxSHgQ336WC6Jj/N8q30OiaBZ00l1GBgeP7usjVZPivSkGUfL1z/WW6TX989M+w==
+  dependencies:
+    "@types/sizzle" "*"
+
+"@types/jquery@^3.5.7":
+  version "3.5.7"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.7.tgz#07614671f79c6ad70633bb2d8977f01cea242e27"
+  integrity sha512-Why+9t1KuqWtIqYKtbk6wgWbE1PjyXJOyGkpmTUh0RX5p4HL7nnRuBkjAO9P2r9tGQP6bLWxl77jRLew3V5xXg==
   dependencies:
     "@types/sizzle" "*"
 
@@ -1203,10 +1215,20 @@
   resolved "https://registry.yarnpkg.com/@types/mithril/-/mithril-2.0.7.tgz#e4016c79ce206621d7aee23de189faf7b007e0d5"
   integrity sha512-ByD422x0GnYh5MOEAWNyqfkw2QlKkK3Yf7y5e1CobDVPG9m+/ThblfrIHENihF7VnygT6sQRObPvY1J/fUZICg==
 
+"@types/mithril@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@types/mithril/-/mithril-2.0.8.tgz#b7b6f58bdc7b244802f5ff919805e947d8e45b4e"
+  integrity sha512-QzVV70DqUhWfLFpMFDBI9rRxtzeUUpbhiFDpUJYSV92AePgl+Qfficgv2MOb1Ceb+lBOQU8+L+Hjf2UielQjEw==
+
 "@types/sizzle@*":
   version "2.3.2"
   resolved "https://registry.npmjs.org/@types/sizzle/-/sizzle-2.3.2.tgz"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
+
+"@types/throttle-debounce@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/throttle-debounce/-/throttle-debounce-2.1.0.tgz#1c3df624bfc4b62f992d3012b84c56d41eab3776"
+  integrity sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -1353,22 +1375,22 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@webpack-cli/configtest@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@webpack-cli/configtest/-/configtest-1.0.3.tgz#204bcff87cda3ea4810881f7ea96e5f5321b87b9"
-  integrity sha512-WQs0ep98FXX2XBAfQpRbY0Ma6ADw8JR6xoIkaIiJIzClGOMqVRvPCWqndTxf28DgFopWan0EKtHtg/5W1h0Zkw==
+"@webpack-cli/configtest@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@webpack-cli/configtest/-/configtest-1.1.0.tgz#8342bef0badfb7dfd3b576f2574ab80c725be043"
+  integrity sha512-ttOkEkoalEHa7RaFYpM0ErK1xc4twg3Am9hfHhL7MVqlHebnkYd2wuI/ZqTDj0cVzZho6PdinY0phFZV3O0Mzg==
 
-"@webpack-cli/info@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@webpack-cli/info/-/info-1.2.4.tgz#7381fd41c9577b2d8f6c2594fad397ef49ad5573"
-  integrity sha512-ogE2T4+pLhTTPS/8MM3IjHn0IYplKM4HbVNMCWA9N4NrdPzunwenpCsqKEXyejMfRu6K8mhauIPYf8ZxWG5O6g==
+"@webpack-cli/info@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@webpack-cli/info/-/info-1.4.0.tgz#b9179c3227ab09cbbb149aa733475fcf99430223"
+  integrity sha512-F6b+Man0rwE4n0409FyAJHStYA5OIZERxmnUfLVwv0mc0V1wLad3V7jqRlMkgKBeAq07jUvglacNaa6g9lOpuw==
   dependencies:
     envinfo "^7.7.3"
 
-"@webpack-cli/serve@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@webpack-cli/serve/-/serve-1.4.0.tgz#f84fd07bcacefe56ce762925798871092f0f228e"
-  integrity sha512-xgT/HqJ+uLWGX+Mzufusl3cgjAcnqYYskaB7o0vRcwOEfuu6hMzSILQpnIzFMGsTaeaX4Nnekl+6fadLbl1/Vg==
+"@webpack-cli/serve@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@webpack-cli/serve/-/serve-1.6.0.tgz#2c275aa05c895eccebbfc34cfb223c6e8bd591a2"
+  integrity sha512-ZkVeqEmRpBV2GHvjjUZqEai2PpUbuq8Bqd//vEYsp63J8WyexI8ppCqVS3Zs0QADf6aWuPdU+0XsPI647PVlQA==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -1928,6 +1950,11 @@ colorette@^1.2.1, colorette@^1.2.2:
   resolved "https://registry.npmjs.org/colorette/-/colorette-1.2.2.tgz"
   integrity sha512-MKGMzyfeuutC/ZJ1cba9NqcNpfeqMUcYmyF1ZFY6/Cn7CNSAKx6a+s48sqLqyAiZuaP2TcqMhoo+dlwFnVxT9w==
 
+colorette@^2.0.14:
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.16.tgz#713b9af84fdb000139f04546bd4a93f62a5085da"
+  integrity sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==
+
 commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
@@ -2089,6 +2116,11 @@ dayjs@^1.10.4:
   version "1.10.4"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.10.4.tgz"
   integrity sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw==
+
+dayjs@^1.10.7:
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
+  integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
 
 debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
@@ -2416,12 +2448,17 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-flarum-tsconfig@^0.1.0-beta.16.1:
-  version "0.1.0-beta.16.1"
-  resolved "https://registry.yarnpkg.com/flarum-tsconfig/-/flarum-tsconfig-0.1.0-beta.16.1.tgz#a5bc5383c5a584005adb90f13be950fc1d84fc20"
-  integrity sha512-LXepwNswwgv+96Tm5WtldZR7nYD8CS/DVawRVN4PaSYES5qfAiQDaBJm4RYFXNcmu2DEQbhx8VejJe0gdCx0Rg==
+flarum-tsconfig@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/flarum-tsconfig/-/flarum-tsconfig-1.0.2.tgz#1dda4d867a1dddc627c2afbc74af12d602371ecd"
+  integrity sha512-RUaN7D6noLK9vY1F86NIc+IlIP1YAA3bJ4jGR5pIm8UxvLBLW8qrAHzIosuQJgvnge7VgTA5c2LoNefUK/9EiQ==
+  dependencies:
+    "@types/jquery" "^3.5.5"
+    "@types/mithril" "^2.0.7"
+    "@types/throttle-debounce" "^2.1.0"
+    dayjs "^1.10.4"
 
-flarum-webpack-config@1.0.0:
+flarum-webpack-config@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/flarum-webpack-config/-/flarum-webpack-config-1.0.0.tgz#daf76829d1a71d1af61b5ab6c98e6c61aa6f1b1a"
   integrity sha512-T+olIRaIVetPJMP8xlbMnp7tzT/d/ZWI6Mr7twRBdsKbKO7dpKS2+fjnKL6QqNYgOLElT/TWrRSbTp7EiL1yXA==
@@ -2439,11 +2476,6 @@ flarum-webpack-config@1.0.0:
     babel-loader "^8.2.2"
     typescript "^4.3.2"
     webpack-bundle-analyzer "^4.4.2"
-
-flarum@^0.1.0-beta.16:
-  version "0.1.0-beta.16"
-  resolved "https://registry.yarnpkg.com/flarum/-/flarum-0.1.0-beta.16.tgz#6571adfd6632ea25794ab5270a9bd8ac2f38e1d3"
-  integrity sha512-uovm+6J8TO35dfbTSRtHRH6tz71W4dnEDfB63NOKHIhOz8oRh65qyWpXtlBOjv9f1cFMkMcjGHbWetb5lAIEnQ==
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -4241,16 +4273,16 @@ webpack-bundle-analyzer@^4.4.2:
     sirv "^1.0.7"
     ws "^7.3.1"
 
-webpack-cli@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-4.7.0.tgz#3195a777f1f802ecda732f6c95d24c0004bc5a35"
-  integrity sha512-7bKr9182/sGfjFm+xdZSwgQuFjgEcy0iCTIBxRUeteJ2Kr8/Wz0qNJX+jw60LU36jApt4nmMkep6+W5AKhok6g==
+webpack-cli@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-4.9.0.tgz#dc43e6e0f80dd52e89cbf73d5294bcd7ad6eb343"
+  integrity sha512-n/jZZBMzVEl4PYIBs+auy2WI0WTQ74EnJDiyD98O2JZY6IVIHJNitkYp/uTXOviIOMfgzrNvC9foKv/8o8KSZw==
   dependencies:
     "@discoveryjs/json-ext" "^0.5.0"
-    "@webpack-cli/configtest" "^1.0.3"
-    "@webpack-cli/info" "^1.2.4"
-    "@webpack-cli/serve" "^1.4.0"
-    colorette "^1.2.1"
+    "@webpack-cli/configtest" "^1.1.0"
+    "@webpack-cli/info" "^1.4.0"
+    "@webpack-cli/serve" "^1.6.0"
+    colorette "^2.0.14"
     commander "^7.0.0"
     execa "^5.0.0"
     fastest-levenshtein "^1.0.12"
@@ -4264,6 +4296,14 @@ webpack-merge@^5.7.3:
   version "5.7.3"
   resolved "https://registry.npmjs.org/webpack-merge/-/webpack-merge-5.7.3.tgz"
   integrity sha512-6/JUQv0ELQ1igjGDzHkXbVDRxkfA57Zw7PfiupdLFJYrgFqY5ZP8xxbpp2lU3EPwYx89ht5Z/aDkD40hFCm5AA==
+  dependencies:
+    clone-deep "^4.0.1"
+    wildcard "^2.0.0"
+
+webpack-merge@^5.8.0:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-5.8.0.tgz#2b39dbf22af87776ad744c390223731d30a68f61"
+  integrity sha512-/SaI7xY0831XwP6kzuwhKWVKDP9t1QY1h65lAFLbZqMPIuYcD9QAW4u9STIbU9kaJbPBB/geU/gLr1wDjOhQ+Q==
   dependencies:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"

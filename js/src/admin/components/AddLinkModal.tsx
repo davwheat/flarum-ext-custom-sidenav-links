@@ -1,31 +1,31 @@
-import Modal from 'flarum/common/components/Modal'
+import Modal from 'flarum/common/components/Modal';
 
-import Button from 'flarum/common/components/Button'
-import Switch from 'flarum/common/components/Switch'
-import Input from './Input'
+import Button from 'flarum/common/components/Button';
+import Switch from 'flarum/common/components/Switch';
+import Input from './Input';
 
-import extractText from 'flarum/common/utils/extractText'
+import extractText from 'flarum/common/utils/extractText';
 
-import SideNavLink from '../../common/models/SideNavLink'
-import isValidUrl from '../isValidUrl'
+import SideNavLink from '../../common/models/SideNavLink';
+import isValidUrl from '../isValidUrl';
 
 const translate = (key: string, data?: Record<string, unknown>): string[] =>
-  app.translator.trans(`davwheat.custom_sidenav_links.admin.settings_page.new_link_modal.${key}`, data)
+  app.translator.trans(`davwheat.custom_sidenav_links.admin.settings_page.new_link_modal.${key}`, data);
 
 export default class AddLinkModal extends Modal {
-  private loading = false
-  private newLink: SideNavLink = new SideNavLink('', '', '', false)
+  private loading = false;
+  private newLink: SideNavLink = new SideNavLink('', '', '', false);
 
   className() {
-    return 'davwheat-sidenav-AddLinkModal Modal--small'
+    return 'davwheat-sidenav-AddLinkModal Modal--small';
   }
 
   title() {
-    return extractText(translate('title'))
+    return extractText(translate('title'));
   }
 
   content() {
-    const validUrl = isValidUrl(this.newLink.url)
+    const validUrl = isValidUrl(this.newLink.url);
 
     return (
       <div className="Modal-body">
@@ -39,7 +39,7 @@ export default class AddLinkModal extends Modal {
                   <Input
                     value={this.newLink.icon}
                     onChange={(newValue: string) => {
-                      this.newLink.icon = newValue
+                      this.newLink.icon = newValue;
                     }}
                     placeholder={translate('placeholders.icon')}
                     disabled={false}
@@ -54,7 +54,7 @@ export default class AddLinkModal extends Modal {
                 <Input
                   value={this.newLink.text}
                   onChange={(newValue: string) => {
-                    this.newLink.text = newValue
+                    this.newLink.text = newValue;
                   }}
                   placeholder={translate('placeholders.text')}
                   disabled={false}
@@ -69,7 +69,7 @@ export default class AddLinkModal extends Modal {
                   class={!validUrl && 'sidenav-input--invalid'}
                   value={this.newLink.url}
                   onChange={(newValue: string) => {
-                    this.newLink.url = newValue
+                    this.newLink.url = newValue;
                   }}
                   placeholder={translate('placeholders.url')}
                   disabled={false}
@@ -81,7 +81,7 @@ export default class AddLinkModal extends Modal {
               <Switch
                 state={this.newLink.internal}
                 onchange={(newValue: boolean) => {
-                  this.newLink.internal = newValue
+                  this.newLink.internal = newValue;
                 }}
                 disabled={false}
               >
@@ -95,25 +95,25 @@ export default class AddLinkModal extends Modal {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   getButtonText(validUrl: boolean): string[] {
-    if (!validUrl) return translate('submit_btn.fix_url')
-    if (this.loading) return translate('submit_btn.loading')
-    if (!this.isValid()) return translate('submit_btn.invalid_form')
+    if (!validUrl) return translate('submit_btn.fix_url');
+    if (this.loading) return translate('submit_btn.loading');
+    if (!this.isValid()) return translate('submit_btn.invalid_form');
 
-    return translate('submit_btn.add')
+    return translate('submit_btn.add');
   }
 
   isValid() {
-    return this.newLink.icon.trim() !== '' && this.newLink.text.trim() !== '' && this.newLink.url.trim() !== ''
+    return this.newLink.icon.trim() !== '' && this.newLink.text.trim() !== '' && this.newLink.url.trim() !== '';
   }
 
   onsubmit() {
-    this.loading = true
-    this.hide.bind(this)()
+    this.loading = true;
+    this.hide.bind(this)();
 
-    this.attrs.links.push(this.newLink)
+    this.attrs.links.push(this.newLink);
   }
 }

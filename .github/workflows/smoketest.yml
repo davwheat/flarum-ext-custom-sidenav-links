@@ -1,42 +1,91 @@
-name: Smoketest
+name: JS
 
-on:
-  push:
+on: [workflow_dispatch, push, pull_request]
+
+env:
+  NODE_VERSION: 16
 
 jobs:
-  install:
+  prettier:
+    name: Prettier
     runs-on: ubuntu-latest
-    name: Format and build
-
-    strategy:
-      matrix:
-        node-version: [14.x]
 
     steps:
-      - name: Checkout code
+      - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Set up Node
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+          cache-dependency-path: js/yarn.lock
 
-      - name: Install Prettier
-        run: |
-          yarn global add prettier @prettier/plugin-php
-          echo "$(yarn global bin)" >> $GITHUB_PATH
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: ./js
 
-      - name: Setup PHP with tools
-        uses: shivammathur/setup-php@v2
+      - name: Check JS formatting
+        run: npm run format-check
+        working-directory: ./js
+
+  build-prod:
+    name: Build and commit
+    runs-on: ubuntu-latest
+    needs: [prettier]
+
+    # Only commit JS on push to master branch
+    # Remember to change in `build-test` job too
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
         with:
-          php-version: '8.0'
-          tools: composer:v2
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+          cache-dependency-path: js/yarn.lock
 
-      - name: Verify formatting
-        run: composer run format:check
-
-      - uses: flarum/action-build@2
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # Our action will install npm, cd into `./js`, run `npm run build` and
+      # `npm run build-typings`, then commit and upload any changes
+      - name: Build production JS
+        uses: flarum/action-build@2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_script: build
           package_manager: yarn
+          # typings_script: build-typings
+
+  build-test:
+    name: Test build
+    runs-on: ubuntu-latest
+    needs: [prettier]
+
+    # Inverse check of `build-prod`
+    # Remember to change in `build-prod` job too
+    if: github.ref != 'refs/heads/main' || github.event_name != 'push'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+          cache-dependency-path: js/yarn.lock
+
+      # Our action will install npm, cd into `./js`, run `npm run build` and
+      # `npm run build-typings`, then commit and upload any changes
+      - name: Build production JS
+        uses: flarum/action-build@2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_script: build
+          package_manager: yarn
+          # typings_script: build-typings
+          do_not_commit: true

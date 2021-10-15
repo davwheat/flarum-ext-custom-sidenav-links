@@ -9,13 +9,13 @@
  * @param str URL string
  */
 export default function isValidUrl(str: string) {
-  let url: URL
+  let url: URL;
 
   try {
-    url = new URL(str)
+    url = new URL(str);
   } catch (_) {
-    return false
+    return false;
   }
 
-  return (url.protocol === 'http:' || url.protocol === 'https:') && url.hostname.includes('.')
+  return (url.protocol === 'http:' || url.protocol === 'https:') && url.hostname.includes('.');
 }
