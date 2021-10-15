@@ -5,7 +5,6 @@ export default class SettingValueInput extends Component {
   view() {
     return (
       <Select
-        type="text"
         className={`FormControl ${this.attrs.class}`}
         disabled={!!this.attrs.disabled}
         value={this.attrs.value}
