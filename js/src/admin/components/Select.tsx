@@ -1,7 +1,15 @@
 import Component from 'flarum/common/Component';
 import Select from 'flarum/common/components/Select';
 
-export default class SettingValueInput extends Component {
+interface ISettingValueInputAttrs<T> {
+  class: string;
+  disabled: boolean;
+  value: string;
+  options: Array<{ value: T; label: string | string[] }>;
+  onChange?: (newValue: T) => void;
+}
+
+export default class SettingValueInput<T> extends Component<ISettingValueInputAttrs<T>> {
   view() {
     return (
       <Select
@@ -14,7 +22,7 @@ export default class SettingValueInput extends Component {
     );
   }
 
-  onChange(value: string) {
+  onChange(value: T) {
     if (typeof this.attrs.onChange === 'function') {
       this.attrs.onChange(value);
     }
